@@ -17,6 +17,9 @@ import com.example.madlevel6task2.ui.recyclers.adapters.MovieAdapter
 import com.example.madlevel6task2.vm.MovieViewModel
 import kotlinx.android.synthetic.main.fragment_movies.*
 
+const val MOVIE_KEY = "MOVIE_KEY"
+const val MOVIE_BUNDLE_KEY = "MOVIE_BUNDLE_KEY"
+
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
@@ -62,8 +65,10 @@ class MoviesFragment : Fragment() {
     }
 
     private fun onSeeMovieDetails(movie: Movie) {
+
+        val bundle = bundleOf(Pair(MOVIE_BUNDLE_KEY, movie.id))
         findNavController().navigate(
-            R.id.action_FirstFragment_to_SecondFragment
+            R.id.action_FirstFragment_to_SecondFragment, bundle
         )
     }
 }

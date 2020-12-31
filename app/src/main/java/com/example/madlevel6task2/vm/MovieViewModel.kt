@@ -19,6 +19,7 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
      * get's updated when user clicks FAB. This happens through the getTriviaNumber() in this class :)
      */
     val movies = movieRepository.movies
+    val movie = movieRepository.movie
 
     private val _errorText: MutableLiveData<String> = MutableLiveData()
 
@@ -43,6 +44,19 @@ class MovieViewModel(application: Application) : AndroidViewModel(application) {
                 _errorText.value = error.message
                 success.value = false
                 Log.e("Getting movies error", error.cause.toString())
+            }
+        }
+    }
+
+    fun getMovie(movieID: Int) {
+        viewModelScope.launch {
+            try {
+                movieRepository.getMovie(movieID)
+                success.value = true
+            } catch (error: MovieRepository.MovieRefreshError) {
+                _errorText.value = error.message
+                success.value = false
+                Log.e("Getting movie error", error.cause.toString())
             }
         }
     }
